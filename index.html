@@ -34,14 +34,47 @@
 To get started using Easy Integrator:
 <br/><br/>
 You need to add <strong>3</strong> references to the Head section of your Web Page.<br/><br/>
-&lt;script src="/Scripts/jquery-1.9.1.js"&gt;&lt;/script&gt;
-&lt;script src="/Scripts/jquery.signalR-1.0.1.js"&gt;&lt;/script&gt;
-&lt;script src="/Scripts/EasyIntegrator.js"&gt;&lt;/script&gt;
+&lt;script src="/Scripts/jquery-1.9.1.js"&gt;&lt;/script&gt; <br/>
+&lt;script src="/Scripts/jquery.signalR-1.0.1.js"&gt;&lt;/script&gt; <br/>
+&lt;script src="/Scripts/EasyIntegrator.js"&gt;&lt;/script&gt; <br/>
   
 </p>
 
 <pre><code>
-[Example Code Goes Here]
+To Process a Transaction:<br/><br/>
+
+//Step 1: Get Data from your form.
+var amount = $("#Amount").val();
+
+//Step 2: Create JSON object to pass to EasyIntegrator.
+var data = {
+    "merchantName": "BobsRibs1",
+    "merchantKey": "A3gziLB98002",
+    "configurationId": "198e84701abc28da",
+    "transactionType": "CreditSale",
+    transFields: { "amount": amount }
+};
+
+//Step 3: Pass request JSON object to the EasyIntegrator processTransaction method.
+EasyIntegrator.processTransaction(data)
+    .success(function () {
+
+        //Do stuff on a successful Transaction
+        var transactionid = EasyIntegrator.resultsFields.uniqueTransId;
+        
+    })
+    .error(function () {
+    
+        //Handle Errors
+        alert(EasyIntegrator.errorMessage);
+        
+    })
+    .finally(function () {
+    
+        //Execute code after the success or error events have fired
+        
+    });
+
 </code></pre>
 
 <p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
