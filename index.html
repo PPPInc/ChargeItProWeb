@@ -39,6 +39,21 @@ You need to add 3 references to the Head section of your Web Page.<br/><br/>
 &lt;script src="/Scripts/EasyIntegrator.js"&gt;&lt;/script&gt; <br/>
 </p>
 
+<h3>To Send a Message to the Server</h3>
+
+<pre><code>
+var message = { "message" : "Echo Test" };
+
+EasyIntegrator.echo(message)
+  .success(function(){
+    alert(EasyIntegrator.response.message);
+  })
+  .error(function(){
+  
+  });
+  
+</code></pre>
+
 <h3>To Process a Transaction</h3>
 
 <pre><code>
