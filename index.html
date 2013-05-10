@@ -42,6 +42,7 @@ You need to add 3 references to the Head section of your Web Page.<br/><br/>
 <h3>To Send a Message to the Server</h3>
 
 <pre><code>
+
 var message = { "message" : "Echo Test" };
 
 EasyIntegrator.echo(message)
@@ -49,7 +50,7 @@ EasyIntegrator.echo(message)
     alert(EasyIntegrator.response.message);
   })
   .error(function(){
-  
+    alert(EasyIntegrator.errorMessage);
   });
   
 </code></pre>
