@@ -98,13 +98,27 @@ EasyIntegrator.processTransaction(data)
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus commodo congue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 
-<h3>A Section</h3>
+<h3>Return Types</h3>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus commodo congue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<p>Easy Integrator returns transaction responses via a JSON object called resultsFields (ie EasyIntegrator.resultsFields).</p>
 
-<h3>Another Section</h3>
+<pre><code>
+  
+  EasyIntegrator.resultsFields.resultStatus
+  EasyIntegrator.resultsFields.uniqueTransId
+  EasyIntegrator.resultsFields.signatureURL
+  
+</code></pre>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus commodo congue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<h3>Rendering a Signature</h3>
+
+<p>EasyIntegrator returns a Signature URL that you can use to set the 'src' attribute of an HTML img tag</p>
+
+<pre><code>
+  
+  <img src='http://cip-webpos.cloudapp.net/signature.ashx?ID=5176a7b89ee750098c9bdef5f' alt='' />
+  
+</code></pre>
 
 <h3>Support or Contact</h3>
 
