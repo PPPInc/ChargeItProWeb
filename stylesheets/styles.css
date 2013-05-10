@@ -258,3 +258,19 @@ footer {
     color:#444;
   }
 }
+
+.highlight {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+
+.highlight .nt {
+    color: #000080;
+}
+
+.highlight .na {
+    color: #008080;
+}
+
+.highlight .s {
+    color: #DD1144;
+}
