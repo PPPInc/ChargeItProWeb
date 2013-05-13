@@ -54,51 +54,53 @@ To get started using Easy Integrator.
 var message = { "message" : "Echo Test" };
 
 EasyIntegrator.echo(message)
-  .success(function(){
-    alert(EasyIntegrator.response.message);
-  })
-  .error(function(){
-    alert(EasyIntegrator.errorMessage);
-  });
+    .success(function(){
+      alert(EasyIntegrator.response.message);
+    })
+    .error(function(){
+	    alert(EasyIntegrator.errorMessage);
+    });
   
 </code></pre>
 
 <h3>To Process a Transaction</h3>
 
-<pre><code>
-//Step 1: Get Data from your form.
+<div class="highlight">
+<pre>
+<span class="g">//Step 1: Get Data from your form.</span>
 var amount = $("#Amount").val();
 
-//Step 2: Create JSON object to pass to EasyIntegrator.
+<span class="g">//Step 2: Create JSON object to pass to EasyIntegrator.</span>
 var data = {
-    "merchantName": "BobsRibs1",
-    "merchantKey": "A3gziLB98002",
-    "configurationId": "198e84701abc28da",
-    "transactionType": "CreditSale",
-    transFields: { "amount": amount }
+	"merchantName": "BobsRibs1",
+	"merchantKey": "A3gziLB98002",
+	"configurationId": "198e84701abc28da",
+	"transactionType": "CreditSale",
+	transFields: { "amount": amount }
 };
 
-//Step 3: Pass request JSON object to the EasyIntegrator processTransaction method.
+<span class="g">//Step 3: Pass request JSON object to the EasyIntegrator processTransaction method.</span>
 EasyIntegrator.processTransaction(data)
     .success(function () {
 
-        //Do stuff on a successful Transaction
-        var transactionId = EasyIntegrator.resultsFields.uniqueTransId;
-        
+	<span class="g">//Do stuff on a successful Transaction</span>
+	var transactionId = EasyIntegrator.resultsFields.uniqueTransId;
+	
     })
     .error(function () {
-    
-        //Handle Errors
-        alert(EasyIntegrator.errorMessage);
-        
+
+	<span class="g">//Handle Errors</span>
+	alert(EasyIntegrator.errorMessage);
+	
     })
     .finally(function () {
-    
-        //Execute code after the success or error events have fired
-        
+
+	<span class="g">//Execute code after the success or error events have fired</span>
+	
     });
 
-</code></pre>
+</pre>
+</div>
 
 <h3>Return Types</h3>
 
