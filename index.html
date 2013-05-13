@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Chargeitproweb by PPPInc</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <p>
+          <img src="http://www.chargeitpro.com/_media/chargeitpro_logo.gif" alt="" />
+        </p>
+        <h1>ChargeItProWeb</h1>
+        <p>ChargeItProWeb API Documentation</p>
+
+        <p class="view"><a href="https://github.com/PPPInc/ChargeItProWeb">View the Project on GitHub <small>PPPInc/ChargeItProWeb</small></a></p>
+<<<<<<< HEAD
+		<p><a href="http://web-pos-client.azurewebsites.net/" target="_blank">View Our Demo Site</a></p>
+=======
+	<p><a href="http://web-pos-client.azurewebsites.net/" target="_blank">View Our Demo Site</a></p>
+>>>>>>> 992b436f2afc6e9ada0b836423dab70b16f59b7d
+
+        <ul>
+          <li><a href="https://github.com/PPPInc/ChargeItProWeb/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/PPPInc/ChargeItProWeb/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/PPPInc/ChargeItProWeb">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>ChargeItProWeb API Documentation</h2>
+
+<p>
+To get started using Easy Integrator.
+
+<p>Include the following scripts on your page: </p>
+<div class="highlight">
+  <pre>
+  
+<span class='nt'>&lt;script</span> <span class='na'>src=</span>"<span class='s'>https://ppppublic.blob.core.windows.net/webpos/jquery-1.9.1.js</span>"<span class='nt'>&gt;&lt;/script&gt;</span>
+<span class='nt'>&lt;script</span> <span class='na'>src=</span>"<span class='s'>https://ppppublic.blob.core.windows.net/webpos/jquery.signalR-1.0.1.js</span>"<span class='nt'>&gt;&lt;/script&gt;</span> 
+<span class='nt'>&lt;script</span> <span class='na'>src=</span>"<span class='s'>https://ppppublic.blob.core.windows.net/webpos/EasyIntegrator-1.0.0.js</span>"<span class='nt'>&gt;&lt;/script&gt;</span>   
+  </pre>
+</div>
+<h3>To Send a Message to the Server</h3>
+<p>
+  To test connectivity to the Charge It Pro server, you can 'echo' a message.
+</p>
+
+<pre><code>
+var message = { "message" : "Echo Test" };
+
+EasyIntegrator.echo(message)
+    .success(function(){
+	    alert(EasyIntegrator.response.message);
+    })
+    .error(function(){
+	    alert(EasyIntegrator.errorMessage);
+    });
+  
+</code></pre>
+
+<h3>To Process a Transaction</h3>
+
+<div class="highlight">
+<pre>
+<span class="g">//Step 1: Get Data from your form.</span>
+var amount = $("#Amount").val();
+
+<span class="g">//Step 2: Create JSON object to pass to EasyIntegrator.</span>
+var data = {
+	"merchantName": "BobsRibs1",
+	"merchantKey": "A3gziLB98002",
+	"configurationId": "198e84701abc28da",
+	"transactionType": "CreditSale",
+	transFields: { "amount": amount }
+};
+
+<span class="g">//Step 3: Pass request JSON object to the EasyIntegrator processTransaction method.</span>
+EasyIntegrator.processTransaction(data)
+    .success(function () {
+
+	<span class="g">//Do stuff on a successful Transaction</span>
+	var transactionId = EasyIntegrator.resultsFields.uniqueTransId;
+	
+    })
+    .error(function () {
+
+	<span class="g">//Handle Errors</span>
+	alert(EasyIntegrator.errorMessage);
+	
+    })
+    .finally(function () {
+
+	<span class="g">//Execute code after the success or error events have fired</span>
+	
+    });
+
+</pre>
+</div>
+
+<h3>Return Types</h3>
+
+<p>Easy Integrator returns transaction responses via a JSON object called resultsFields (ie EasyIntegrator.resultsFields).</p>
+<pre><code>
+  EasyIntegrator.resultsFields.resultStatus
+  EasyIntegrator.resultsFields.uniqueTransId
+  EasyIntegrator.resultsFields.signatureURL
+  
+</code></pre>
+
+<h3>Rendering a Signature</h3>
+
+<p>EasyIntegrator returns a Signature URL that you can use to set the 'src' attribute of an HTML img tag</p>
+
+<div class="highlight">
+  <pre>
+  
+<span class='nt'>&lt;img</span> <span class='na'>src=</span><span class='s'>'http://cip-webpos.cloudapp.net/signature.ashx?ID=5176a7b89ee750098c9bdef5f' alt='' </span><span class='nt'>/&gt;</span>
+  </pre>
+</div>
+<h3>Support or Contact</h3>
+
+<p>Having trouble?  Contact <a href="mailto:support@github.com">support@email.com</a> and we’ll help you sort it out.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/PPPInc">PPPInc</a></p>
+        <p><small>Hosted on GitHub &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+  </body>
+</html>
