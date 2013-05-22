@@ -16,6 +16,8 @@ p, ul, ol, table, pre, dl {
   margin:0 0 20px;
 }
 
+
+
 h1, h2, h3 {
   line-height:1.1;
 }
@@ -271,6 +273,13 @@ footer {
     color: #DD1144;
 }
 
+
 .highlight .g {
     color: #7A7980;
 }
+
+
+.highlight .g {
+    color: #7A7980;
+}
+
