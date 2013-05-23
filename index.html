@@ -117,12 +117,20 @@ EasyIntegrator.processTransaction(data)
 
 <h3>Return Types</h3>
 
-<p>Easy Integrator returns transaction responses via a JSON object called resultsFields (ie EasyIntegrator.resultsFields).</p>
+<p>
+Easy Integrator returns transaction responses via a JSON object called resultsFields (ie EasyIntegrator.resultsFields).
+The following are the recommended fields you should add to your printed receipt.	
+</p>
 <pre><code>
+  EasyIntegrator.resultsFields.transactionType
+  EasyIntegrator.resultsFields.maskedAccount
+  EasyIntegrator.resultsFields.accountCardType
+  EasyIntegrator.resultsFields.amountTotal
+  EasyIntegrator.resultsFields.approvalNumber
+  EasyIntegrator.resultsFields.billingName
   EasyIntegrator.resultsFields.resultStatus
   EasyIntegrator.resultsFields.uniqueTransId
   EasyIntegrator.resultsFields.signatureURL
-  
 </code></pre>
 
 <h3>Rendering a Signature</h3>
