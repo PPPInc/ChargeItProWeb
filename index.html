@@ -144,6 +144,33 @@ The following are the recommended fields you should add to your printed receipt.
 <span class='nt'>&lt;img</span> <span class='na'>src=</span><span class='s'>'http://cip-webpos.cloudapp.net/signature.ashx?ID=5176a7b89ee750098c9bdef5f' alt='' </span><span class='nt'>/&gt;</span>
   </pre>
 </div>
+
+<h3>Running Setup</h3>
+
+<p>
+This is how you run setup on a workstation.	
+</p>
+<pre><code>
+$("#Setup").on("click", function () {
+
+	var data = {
+		"merchantName": "TestUser1",
+		"merchantKey": "842e1b378d0d41be97d05bfa9b014ee9"
+	};
+
+	EasyIntegrator.runSetup(data)
+		.success(function () {
+			var configurationId = EasyIntegrator.configurationId;
+			//IMPORTANT: You must store this configurationId 
+			//(ie a database) and pass it in on all Transaction Requests. 
+		})
+		.error(function () {
+			alert(EasyIntegrator.errorMessage);
+		});
+
+});
+  
+</code></pre>
 <h3>Support or Contact</h3>
 
 <p>Having trouble?  Contact <a href="mailto:support@github.com">support@email.com</a> and we’ll help you sort it out.</p>
