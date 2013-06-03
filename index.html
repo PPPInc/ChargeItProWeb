@@ -76,6 +76,37 @@ EasyIntegrator.echo(message)
   
 </code></pre>
 
+<h2>Transactions</h2>
+
+<h3>Running Setup</h3>
+
+<p>
+Before you Process a Transaction, you must configure the workstation.  This is how you Setup (configure) a workstation.	
+<div style="font-size: small;"><i><strong>Note:&nbsp;&nbsp;</strong>After running Setup you must capture and store the returned ConfigurationId (EasyIntegrator.configurationId) 
+and pass this in along with your Authentication Credentials (MerchantName and MerchantKey) for each Transaction.</i></div>
+</p>
+<pre><code>
+$("#Setup").on("click", function () {
+
+	var data = {
+		"merchantName": "TestUser1",
+		"merchantKey": "842e1b378d0d41be97d05bfa9b014ee9"
+	};
+
+	EasyIntegrator.runSetup(data)
+		.success(function () {
+			var configurationId = EasyIntegrator.configurationId;
+			//IMPORTANT: You must store this configurationId 
+			//(ie in a database) and pass it in on all Transaction Requests. 
+		})
+		.error(function () {
+			alert(EasyIntegrator.errorMessage);
+		});
+
+});
+  
+</code></pre>
+
 <h3>To Process a Transaction</h3>
 
 <div class="highlight">
@@ -86,8 +117,8 @@ var amount = $("#Amount").val();
 <span class="g">//Step 2: Create JSON object to pass to EasyIntegrator.</span>
 var data = {
 	"merchantName": "BobsRibs1",
-	"merchantKey": "842e1b378d0d41be97d05bfa9b014ee9",
-	"configurationId": "ea060c2e06144e6398e9523271801d6e",
+	"merchantKey": "A3gziLB98002",
+	"configurationId": "198e84701abc28da",
 	"transactionType": "CreditSale",
 	transFields: { "amountTotal": amount }
 };
@@ -145,31 +176,6 @@ The following are the recommended fields you should add to your printed receipt.
   </pre>
 </div>
 
-<h3>Running Setup</h3>
-
-<p>
-This is how you run setup on a workstation.	
-</p>
-<pre><code>
-$("#Setup").on("click", function () {
-
-	var data = {
-		"merchantName": "BobsRibs1",
-		"merchantKey": "842e1b378d0d41be97d05bfa9b014ee9"
-	};
-
-	EasyIntegrator.runSetup(data)
-		.success(function () {
-			var configurationId = EasyIntegrator.configurationId;
-			//IMPORTANT: You must store this configurationId 
-			//(ie in a database) and pass it in on all Transaction Requests. 
-		})
-		.error(function () {
-			alert(EasyIntegrator.errorMessage);
-		});
-
-});
-  
 </code></pre>
 <h3>Support or Contact</h3>
 
@@ -183,3 +189,4 @@ $("#Setup").on("click", function () {
     <script src="javascripts/scale.fix.js"></script>
   </body>
 </html>
+
