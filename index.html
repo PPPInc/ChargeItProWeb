@@ -111,6 +111,7 @@ $("#Setup").on("click", function () {
 
 <div class="highlight">
 <pre>
+
 <span class="g">//Step 1: Get Data from your form.</span>
 var amount = $("#Amount").val();
 
@@ -177,6 +178,34 @@ $("#Signature").attr("src", EasyIntegrator.resultsFields.signatureURL);
 <span class='nt'>&lt;img id="Signature"</span> <span class='na'>src=</span><span class='s'>"http://cip-webpos.cloudapp.net/signature.ashx?ID=5176a7b89ee750098c9bdef5f" alt="" </span><span class='nt'>/&gt;</span>
   </pre>
 </div>
+
+<h3>Tokenization</h3>
+
+<p>
+Easy Integrator allows you to charge a return Customer without a Credit Card via a process called Tokenization.  
+You must intercept and store the <strong><i>EasyIntegrator.resultsFields.uniqueTransId</i></strong> returned on a successful transaction, 
+then pass this in via the <strong><i>EasyIntegrator.transFields.uniqueTransRef</i></strong> field on subsequent transactions.
+</p>
+<pre><code>
+ <span class="g">//Step 1: Process a transaction and save the returned uniqueTransId.</span>
+ EasyIntegrator.processTransaction(data)
+     .success(function () {
+
+      <span class="g">//Capture and save the uniqueTransId</span>
+      var transactionId = EasyIntegrator.resultsFields.uniqueTransId;
+
+ })
+
+ <span class="g">//Step 2: Include this uniqueTransId in the JSON object's </span>
+ <span class="g">//transFields object before you pass it in to the processTransaction method.</span>
+ var data = {
+ 	"merchantName": "BobsRibs1",
+ 	"merchantKey": "A3gziLB98002",
+ 	"configurationId": "198e84701abc28da",
+ 	"transactionType": "CreditSale",
+ 	transFields: { "amountTotal": amount, uniqueTransRef: "3dda302f811844bc8984c90d37b0167b" }
+ };
+</code></pre>
 
 </code></pre>
 <h3>Support or Contact</h3>
