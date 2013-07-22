@@ -71,12 +71,12 @@ Our <a href="https://ppppublic.blob.core.windows.net/webpos/ChargeItProWebPOS.zi
 var request = { "message" : "Echo Test" };
 
 EasyIntegrator.echo(request)
-    .success(function(){
-alert(EasyIntegrator.response.message);
-    })
-    .error(function(){
-alert(EasyIntegrator.errorMessage);
-    });
+	.success(function(){
+		alert(EasyIntegrator.response.message);
+	})
+	.error(function(){
+		alert(EasyIntegrator.errorMessage);
+	});
   
 </code></pre>
 
@@ -99,15 +99,14 @@ var request = {
 };
 
 EasyIntegrator.runSetup(request)
-.success(function () {
-var configurationId = EasyIntegrator.configurationId;
-//IMPORTANT: You must store this configurationId
-//(ie in a database) and pass it in on all Transaction Requests.
-})
-.error(function () {
-alert(EasyIntegrator.errorMessage);
-});
-
+	.success(function () {
+		var configurationId = EasyIntegrator.configurationId;
+		//IMPORTANT: You must store this configurationId
+		//(ie in a database) and pass it in on all Transaction Requests.
+	})
+	.error(function () {
+		alert(EasyIntegrator.errorMessage);
+	});
 });
   
 </code></pre>
@@ -134,21 +133,15 @@ var request = {
 <span class="g">//Step 3: Pass request JSON object to the EasyIntegrator processTransaction method.</span>
 EasyIntegrator.processTransaction(request)
     .success(function () {
-
 	<span class="g">//Do stuff on a successful Transaction</span>
 	var transactionId = EasyIntegrator.resultsFields.uniqueTransId;
-
     })
     .error(function () {
-
 	<span class="g">//Handle Errors</span>
 	alert(EasyIntegrator.errorMessage);
-
     })
     .finally(function () {
-
 	<span class="g">//Execute code after the success or error events have fired</span>
-
     });
 
 </pre>
@@ -507,5 +500,4 @@ EasyIntegrator.processTransaction(request)
 	});
 	
 </script>
-
 
