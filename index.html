@@ -68,9 +68,9 @@ Our <a href="https://ppppublic.blob.core.windows.net/webpos/ChargeItProWebPOS.zi
 </p>
 
 <pre><code>
-var message = { "message" : "Echo Test" };
+var request = { "message" : "Echo Test" };
 
-EasyIntegrator.echo(message)
+EasyIntegrator.echo(request)
     .success(function(){
 alert(EasyIntegrator.response.message);
     })
@@ -93,12 +93,12 @@ and pass this in along with your Authentication Credentials (MerchantName and Me
 <pre><code>
 $("#Setup").on("click", function () {
 
-var data = {
+var request = {
 	"merchantName": "TestUser1",
 	"merchantKey": "842e1b378d0d41be97d05bfa9b014ee9"
 };
 
-EasyIntegrator.runSetup(data)
+EasyIntegrator.runSetup(request)
 .success(function () {
 var configurationId = EasyIntegrator.configurationId;
 //IMPORTANT: You must store this configurationId
@@ -121,7 +121,7 @@ alert(EasyIntegrator.errorMessage);
 var amount = $("#Amount").val();
 
 <span class="g">//Step 2: Create JSON object to pass to EasyIntegrator.</span>
-var data = {
+var request = {
 	"merchantName": "BobsRibs1",
 	"merchantKey": "A3gziLB98002",
 	"configurationId": "198e84701abc28da",
@@ -132,7 +132,7 @@ var data = {
 };
 
 <span class="g">//Step 3: Pass request JSON object to the EasyIntegrator processTransaction method.</span>
-EasyIntegrator.processTransaction(data)
+EasyIntegrator.processTransaction(request)
     .success(function () {
 
 	<span class="g">//Do stuff on a successful Transaction</span>
@@ -195,7 +195,7 @@ then pass this in via the <strong><i>EasyIntegrator.transFields.uniqueTransRef</
 </p>
 <pre><code>
  <span class="g">//Step 1: Process a transaction and save the returned uniqueTransId.</span>
- EasyIntegrator.processTransaction(data)
+ EasyIntegrator.processTransaction(request)
      .success(function () {
 
       <span class="g">//Capture and save the uniqueTransId</span>
@@ -205,7 +205,7 @@ then pass this in via the <strong><i>EasyIntegrator.transFields.uniqueTransRef</
 
  <span class="g">//Step 2: Include this id in the JSON object's transFields uniqueTransRef </span>
  <span class="g">//field before you pass it in to the processTransaction method.</span>
- var data = {
+ var request = {
 	"merchantName": "...",
 	"merchantKey": "...",
 	"configurationId": "...",
@@ -507,4 +507,5 @@ EasyIntegrator.processTransaction(request)
 	});
 	
 </script>
+
 
