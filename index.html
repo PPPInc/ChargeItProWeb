@@ -113,6 +113,10 @@ EasyIntegrator.runSetup(request)
 <a href="#" class="back-to-top">Back to Top</a>
 <h3>To Process a Transaction</h3>
 
+<p>
+<div style="font-size: small;"><i><strong>Note:&nbsp;&nbsp;</strong>Required fields are highlighted in red below.</i></div>
+</p>
+
 <div class="highlight">
 <pre>
 
@@ -121,10 +125,10 @@ var amount = $("#Amount").val();
 
 <span class="g">//Step 2: Create JSON object to pass to EasyIntegrator.</span>
 var request = {
-	"merchantName": "BobsRibs1",
-	"merchantKey": "A3gziLB98002",
-	"configurationId": "198e84701abc28da",
-	"transactionType": "CreditSale",
+	<span class='s'>"merchantName": "BobsRibs1"</span>,
+	<span class='s'>"merchantKey": "A3gziLB98002",</span>
+	<span class='s'>"configurationId": "198e84701abc28da",</span>
+	<span class='s'>"transactionType": "CreditSale",</span>
 	"transFields": { 
 		"amountTotal": amount 
 	}
