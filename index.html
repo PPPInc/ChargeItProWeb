@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="https://ppppublic.blob.core.windows.net/webpos/jquery-1.9.1.js"></script>
   </head>
   <body>
     <div class="wrapper">
@@ -22,10 +23,10 @@
         <p>ChargeItProWeb API Documentation</p>
 
         <p class="view"><a href="https://github.com/PPPInc/ChargeItProWeb">View the Project on GitHub <small>PPPInc/ChargeItProWeb</small></a></p>
-		
-		<p><a href="https://ppppublic.blob.core.windows.net/webpos/ChargeItProWebPOS.zip" target="_blank">Download our Windows Client</a></p>
 
-		<p><a href="http://web-pos-client.azurewebsites.net/" target="_blank">View Our Demo Site</a></p>
+<p><a href="https://ppppublic.blob.core.windows.net/webpos/ChargeItProWebPOS.zip" target="_blank">Download our Windows Client</a></p>
+
+<p><a href="http://web-pos-demo.azurewebsites.net/" target="_blank">View Our Demo Site</a></p>
 
         <ul>
           <li><a href="https://github.com/PPPInc/ChargeItProWeb/zipball/master">Download <strong>ZIP File</strong></a></li>
@@ -36,6 +37,10 @@
       <section>
         <h2>ChargeItProWeb API Documentation</h2>
 
+<p>
+<h4>Go To:&nbsp;&nbsp;<a href="#" onclick="scrollToAnchor('PaymentTransactions');" style="font-weight: bold";>Payment Transactions</a>&nbsp;|&nbsp;<a href="#" onclick="scrollToAnchor('CustomerTransactions');" style="font-weight: bold";>Customer Transactions</a></h4>
+</p>
+
 <p>To get started using Easy Integrator.
 
 <h3>Download our Windows Client</h3>
@@ -43,7 +48,7 @@
 <p>
 Our <a href="https://ppppublic.blob.core.windows.net/webpos/ChargeItProWebPOS.zip" target="_blank">Windows Client Software</a> allows your Web Site to communicate with Hardware Devices to capture payment information and signatures.
 <div style="font-size: small;">
-	<strong>*Note:</strong>&nbsp;This version contains an Emulator that allows you to process payment information and signatures without a local hardware device installed.
+<i><strong>Note:</strong>&nbsp;This version contains an Emulator that allows you to process payment information and signatures without a local hardware device installed.</i>
 </div>
 </p>
 
@@ -54,8 +59,10 @@ Our <a href="https://ppppublic.blob.core.windows.net/webpos/ChargeItProWebPOS.zi
   <pre>
   
 <span class='nt'>&lt;script</span> <span class='na'>src=</span>"<span class='s'>https://ppppublic.blob.core.windows.net/webpos/jquery-1.9.1.js</span>"<span class='nt'>&gt;&lt;/script&gt;</span>
-<span class='nt'>&lt;script</span> <span class='na'>src=</span>"<span class='s'>https://ppppublic.blob.core.windows.net/webpos/jquery.signalR-1.0.1.js</span>"<span class='nt'>&gt;&lt;/script&gt;</span> 
-<span class='nt'>&lt;script</span> <span class='na'>src=</span>"<span class='s'>https://ppppublic.blob.core.windows.net/webpos/EasyIntegrator-1.0.0.js</span>"<span class='nt'>&gt;&lt;/script&gt;</span>   
+<span class='nt'>&lt;script</span> <span class='na'>src=</span>"<span class='s'>https://ppppublic.blob.core.windows.net/webpos/EasyIntegrator-1.0.0.js</span>"<span class='nt'>&gt;&lt;/script&gt;</span>
+<span class='g'>//For Testing</span>
+<span class='nt'>&lt;script</span> <span class='na'>src=</span>"<span class='s'>https://ppppublic.blob.core.windows.net/webpos/EasyIntegrator.debug.js</span>"<span class='nt'>&gt;&lt;/script&gt;</span>	
+  
   </pre>
 </div>
 <h3>To Send a Message to the Server</h3>
@@ -64,80 +71,416 @@ Our <a href="https://ppppublic.blob.core.windows.net/webpos/ChargeItProWebPOS.zi
 </p>
 
 <pre><code>
-var message = { "message" : "Echo Test" };
+var request = { "message" : "Echo Test" };
 
-EasyIntegrator.echo(message)
-    .success(function(){
-	    alert(EasyIntegrator.response.message);
-    })
-    .error(function(){
-	    alert(EasyIntegrator.errorMessage);
-    });
+EasyIntegrator.echo(request)
+.success(function(){
+alert(EasyIntegrator.response.message);
+})
+.error(function(){
+alert(EasyIntegrator.errorMessage);
+});
   
 </code></pre>
 
+<a name="PaymentTransactions"></a>
+<h2>Payment Transactions</h2>
+
+<h3>Running Setup</h3>
+
+<p>
+Before you Process a Transaction, you must configure the workstation. This is how you Setup (configure) a workstation.
+<div style="font-size: small;"><i><strong>Note:&nbsp;&nbsp;</strong>After running Setup you must capture and store the returned ConfigurationId (EasyIntegrator.configurationId)
+and pass this in along with your Authentication Credentials (MerchantName and MerchantKey) for each Transaction.</i></div>
+</p>
+<pre><code>
+$("#Setup").on("click", function () {
+
+var request = {
+"merchantName": "TestUser1",
+"merchantKey": "842e1b378d0d41be97d05bfa9b014ee9"
+};
+
+EasyIntegrator.runSetup(request)
+.success(function () {
+var configurationId = EasyIntegrator.configurationId;
+//IMPORTANT: You must store this configurationId
+//(ie in a database) and pass it in on all Transaction Requests.
+})
+.error(function () {
+alert(EasyIntegrator.errorMessage);
+});
+});
+  
+</code></pre>
+<a href="#" class="back-to-top">Back to Top</a>
 <h3>To Process a Transaction</h3>
+
+<p>
+<div style="font-size: small;"><i><strong>Note:&nbsp;&nbsp;</strong>Required fields are highlighted in red below.</i></div>
+</p>
 
 <div class="highlight">
 <pre>
+
 <span class="g">//Step 1: Get Data from your form.</span>
 var amount = $("#Amount").val();
 
 <span class="g">//Step 2: Create JSON object to pass to EasyIntegrator.</span>
-var data = {
-	"merchantName": "BobsRibs1",
-	"merchantKey": "A3gziLB98002",
-	"configurationId": "198e84701abc28da",
-	"transactionType": "CreditSale",
-	transFields: { "amountTotal": amount }
+var request = {
+<span class='s'>"merchantName": "BobsRibs1"</span>,
+<span class='s'>"merchantKey": "A3gziLB98002",</span>
+<span class='s'>"configurationId": "198e84701abc28da",</span>
+<span class='s'>"transactionType": "CreditSale",</span>
+"transFields": {
+"amountTotal": amount
+}
 };
 
 <span class="g">//Step 3: Pass request JSON object to the EasyIntegrator processTransaction method.</span>
-EasyIntegrator.processTransaction(data)
+EasyIntegrator.processTransaction(request)
     .success(function (resultsFields) {
-
-	<span class="g">//Do stuff on a successful Transaction</span>
-	var transactionId = resultsFields.uniqueTransId;
-	
+<span class="g">//Do stuff on a successful Transaction</span>
+var transactionId = resultsFields.uniqueTransId;
     })
     .error(function () {
-
-	<span class="g">//Handle Errors</span>
-	alert(EasyIntegrator.errorMessage);
-	
+<span class="g">//Handle Errors</span>
+alert(EasyIntegrator.errorMessage);
     })
-    .finally(function () {
-
-	<span class="g">//Execute code after the success or error events have fired</span>
-	
+    .done(function () {
+<span class="g">//Execute code after the success or error events have fired</span>
     });
 
 </pre>
 </div>
-
+<a href="#" class="back-to-top">Back to Top</a>
 <h3>Return Types</h3>
 
-<p>Easy Integrator returns transaction responses via a JSON object called resultsFields (ie EasyIntegrator.resultsFields).</p>
+<p>
+Easy Integrator returns transaction responses via a JSON object called resultsFields (ie EasyIntegrator.resultsFields).
+The following are the recommended fields you should add to your printed receipt.
+</p>
 <pre><code>
+  EasyIntegrator.resultsFields.transactionType
+  EasyIntegrator.resultsFields.maskedAccount
+  EasyIntegrator.resultsFields.accountCardType
+  EasyIntegrator.resultsFields.amountTotal
+  EasyIntegrator.resultsFields.approvalNumber
+  EasyIntegrator.resultsFields.billingName
   EasyIntegrator.resultsFields.resultStatus
   EasyIntegrator.resultsFields.uniqueTransId
   EasyIntegrator.resultsFields.signatureURL
   
 </code></pre>
-
+<a href="#" class="back-to-top">Back to Top</a>
 <h3>Rendering a Signature</h3>
 
-<p>EasyIntegrator returns a Signature URL that you can use to set the 'src' attribute of an HTML img tag</p>
+<p>EasyIntegrator returns a Signature URL that you can use to set the 'src' attribute of an HTML img tag.</p>
 
 <div class="highlight">
   <pre>
   
-<span class='nt'>&lt;img</span> <span class='na'>src=</span><span class='s'>'http://cip-webpos.cloudapp.net/signature.ashx?ID=5176a7b89ee750098c9bdef5f' alt='' </span><span class='nt'>/&gt;</span>
+$("#Signature").attr("src", EasyIntegrator.resultsFields.signatureURL);
+
+<span class='nt'>&lt;img id="Signature"</span> <span class='na'>src=</span><span class='s'>"http://cip-webpos.cloudapp.net/signature.ashx?ID=5176a7b89ee750098c9bdef5f" alt="" </span><span class='nt'>/&gt;</span>
   </pre>
 </div>
+<a href="#" class="back-to-top">Back to Top</a>
+<h3>Tokenization</h3>
+
+<p>
+Easy Integrator allows you to charge a return Customer without a Credit Card via a process called Tokenization.
+You must intercept and store the <strong><i>EasyIntegrator.resultsFields.uniqueTransId</i></strong> returned on a successful transaction,
+then pass this in via the <strong><i>EasyIntegrator.transFields.uniqueTransRef</i></strong> field on subsequent transactions.
+</p>
+<pre><code>
+ <span class="g">//Step 1: Process a transaction and save the returned uniqueTransId.</span>
+ EasyIntegrator.processTransaction(request)
+     .success(function () {
+
+      <span class="g">//Capture and save the uniqueTransId</span>
+      var transactionId = EasyIntegrator.resultsFields.uniqueTransId;
+
+ })
+
+ <span class="g">//Step 2: Include this id in the JSON object's transFields uniqueTransRef </span>
+ <span class="g">//field before you pass it in to the processTransaction method.</span>
+ var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "CreditSale",
+"transFields": {
+"amountTotal": amount,
+"uniqueTransRef": "3dda302f811844bc8984c90d37b0167b"
+}
+ };
+</code></pre>
+
+<a name="CustomerTransactions"></a>
+<h2>Customer Transactions</h2>
+
+<h3>To Create a Customer</h3>
+
+<p>
+To Create a Customer, you must specify the transactionType as 'CreateCustomer' and pass in a customerFields JSON object.
+</p>
+<div class="highlight">
+<pre>
+var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "CreateCustomer",
+"customerFields": {
+"firstName": "Test",
+"lastName": "User",
+"address": "1 Mockingbird Ln.",
+"address2" : "",
+"city": "Boise",
+"state": "ID",
+"zip": "83704"
+"company": "Customer's Company",
+"email": "email@domain.com",
+"phone": "555-555-5555
+}
+};
+
+EasyIntegrator.processTransaction(request)
+.success(function () {
+var customerRef = EasyIntegrator.customer.customerRef;
+});
+
+</pre>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+<h3>To Update a Customer</h3>
+<p>
+To Update a Customer, you must specify the transactionType as 'UpdateCustomer' and pass in a customerFields JSON object that contains
+the customerRef identifier generated by the CreateCustomer transaction.
+</p>
+<div class="highlight">
+<pre>
+var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "UpdateCustomer",
+"customerFields": {
+"customerRef": 200001,
+"firstName": "UpdatedTest",
+"lastName": "UpdatedUser",
+"address": "2 Mockingbird Ln.",
+"address2" : "",
+"city": "Boise",
+"state": "ID",
+"zip": "83704"
+"company": "Customer's Company",
+"email": "email@domain.com",
+"phone": "555-555-5555
+}
+};
+
+EasyIntegrator.processTransaction(request)
+.success(function () {
+alert('Customer has been updated');
+});
+
+</pre>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+<h3>To Delete a Customer</h3>
+<p>
+To Delete a Customer, you must specify the transactionType as 'DeleteCustomer' and pass in a customerFields JSON object that contains
+the customerRef identifier generated by the CreateCustomer transaction.
+</p>
+<div class="highlight">
+<pre>
+var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "DeleteCustomer",
+"customerFields": {
+"customerRef": 200001
+}
+};
+
+EasyIntegrator.processTransaction(request)
+.success(function () {
+alert('Customer has been updated');
+});
+
+</pre>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+<h3>To Add a Check Payment</h3>
+<p>
+To Add a Check Payment for a Customer, you must specify the transactionType as 'AddCheckPayment' and pass in a customerFields JSON object that contains
+the customerRef identifier generated by the CreateCustomer transaction.
+</p>
+<div class="highlight">
+<pre>
+var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "AddCheckPayment",
+"customerFields": {
+"customerRef": 200001
+}
+};
+
+EasyIntegrator.processTransaction(request)
+.success(function () {
+var paymentId = EasyIntegrator.customer.paymentId;
+});
+
+</pre>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+<h3>To Add a Credit Payment</h3>
+<p>
+To Add a Credit Payment for a Customer, you must specify the transactionType as 'AddCheckPayment' and pass in a customerFields JSON object that contains
+the customerRef identifier generated by the CreateCustomer transaction.
+</p>
+<div class="highlight">
+<pre>
+var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "AddCreditPayment",
+"customerFields": {
+"customerRef": 200001
+}
+};
+
+EasyIntegrator.processTransaction(request)
+.success(function () {
+var paymentId = EasyIntegrator.customer.paymentId;
+});
+
+</pre>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+<h3>To Modify an Expiration Date for an existing Credit Payment</h3>
+<p>
+To Modify an Expiration Date for an existing Credit Payment, you must specify the transactionType as 'ModifyExpirationDate'
+and pass in a customerFields JSON object that contains the customerRef identifier and paymentId generated by the AddCreditPayment transaction.
+</p>
+<div class="highlight">
+<pre>
+var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "ModifyExpirationDate",
+"customerFields": {
+"customerRef": 200001,
+"paymentId": 3010101
+}
+};
+
+EasyIntegrator.processTransaction(request)
+.success(function () {
+alert('Expiration Date has been successfully updated.');
+});
+
+</pre>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+<h3>To Schedule Payments</h3>
+<p>
+To Schedule Payments for a Customer, you must specify the transactionType as 'SchedulePayments'
+and pass in a customerFields JSON object that contains the customerRef identifier.
+</p>
+<div class="highlight">
+<pre>
+var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "SchedulePayments",
+"customerFields": {
+"customerRef": 200001
+}
+};
+
+EasyIntegrator.processTransaction(request)
+.success(function () {
+alert('Expiration Date has been successfully updated.');
+});
+
+</pre>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+<h3>To Update an Existing Payment</h3>
+<p>
+To Update an Existing Payment, you must specify the transactionType as 'UpdatePayment'
+and pass in a customerFields JSON object that contains the customerRef identifier.<br/>
+<i><strong>Note:</strong>&nbsp;This Transaction also updates the customer fields.</i>
+</p>
+<div class="highlight">
+<pre>
+var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "UpdatePayment",
+"customerFields": {
+"customerRef": 200001,
+"firstName": "UpdatedTest",
+"lastName": "UpdatedUser",
+"address": "2 Mockingbird Ln.",
+"address2" : "",
+"city": "Boise",
+"state": "ID",
+"zip": "83704"
+"company": "Customer's Company",
+"email": "email@domain.com",
+"phone": "555-555-5555
+}
+};
+
+EasyIntegrator.processTransaction(request)
+.success(function () {
+alert('Payment has been successfully updated.');
+});
+
+</pre>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
+<h3>To Delete a Payment</h3>
+<p>
+To Delete Payment, you must specify the transactionType as 'DeletePayment'
+and pass in a customerFields JSON object that contains the customerRef identifier.<br/>
+<i><strong>Note:</strong>&nbsp;This Transaction also updates the customer fields.</i>
+</p>
+<div class="highlight">
+<pre>
+var request = {
+"merchantName": "...",
+"merchantKey": "...",
+"configurationId": "...",
+"transactionType": "DeletePayment",
+"customerFields": {
+"customerRef": 200001,
+"paymentId": 3010101
+}
+};
+
+EasyIntegrator.processTransaction(request)
+.success(function () {
+alert('Payment has been successfully updated.');
+});
+
+</pre>
+</div>
+<a href="#" class="back-to-top">Back to Top</a>
 <h3>Support or Contact</h3>
 
-<p>Having trouble?  Contact <a href="mailto:support@github.com">support@email.com</a> and we’ll help you sort it out.</p>
+<p>Having trouble? Contact <a href="mailto:support@github.com">support@email.com</a> and we’ll help you sort it out.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/PPPInc">PPPInc</a></p>
@@ -147,4 +490,21 @@ EasyIntegrator.processTransaction(data)
     <script src="javascripts/scale.fix.js"></script>
   </body>
 </html>
+
+<script type="text/javascript">
+
+function scrollToAnchor(aname){
+var aTag = $("a[name='"+ aname +"']");
+$('html,body').animate({scrollTop: aTag.offset().top},'fast');
+}
+
+    $(function () {
+
+$('.back-to-top').click(function() {
+$('html, body').animate({scrollTop:0}, 'slow');
+});
+
+});
+
+</script>
 
