@@ -94,10 +94,10 @@ var data = {
 
 <span class="g">//Step 3: Pass request JSON object to the EasyIntegrator processTransaction method.</span>
 EasyIntegrator.processTransaction(data)
-    .success(function () {
+    .success(function (resultsFields) {
 
 	<span class="g">//Do stuff on a successful Transaction</span>
-	var transactionId = EasyIntegrator.resultsFields.uniqueTransId;
+	var transactionId = resultsFields.uniqueTransId;
 	
     })
     .error(function () {
