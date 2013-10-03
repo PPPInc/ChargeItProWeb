@@ -143,9 +143,9 @@ EasyIntegrator.processTransaction(request)
 	<span class="g">//Do stuff on a successful Transaction</span>
 	var transactionId = resultsFields.uniqueTransId;
     })
-    .error(function () {
+    .error(function (errorMessage) {
 	<span class="g">//Handle Errors</span>
-	alert(EasyIntegrator.errorMessage);
+	alert(errorMessage);
     })
     .done(function () {
 	<span class="g">//Execute code after the success or error events have fired</span>
